@@ -1,4 +1,40 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+// Function to read metadata from a directory
+function readMetadata(dir) {
+    const metadataPath = path.join(dir, 'metadata.json');
+    if (fs.existsSync(metadataPath)) {
+        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+        return metadata;
+    }
+    return null;
+}
+
+// Function to generate the HTML for a single article
+function generateArticleHTML(metadata) {
+    const tagsHTML = metadata.tags.map(tag => 
+        `<span class="tag">${tag}</span>`
+    ).join('\n');
+
+    return `
+            <article class="blog-post">
+                <div class="post-header">
+                    <h2><a href="articles/${metadata.slug}">${metadata.title}</a></h2>
+                    <p class="date">${metadata.date}</p>
+                </div>
+                <div class="tags">
+                    ${tagsHTML}
+                </div>
+                <p class="description">${metadata.shortDescription}</p>
+            </article>`;
+}
+
+// Function to generate the complete index.html
+function generateIndexHTML(articles) {
+    const articlesHTML = articles.map(generateArticleHTML).join('\n');
+
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,17 +62,7 @@
 
     <main>
         <section class="blog-posts">
-            
-            <article class="blog-post">
-                <div class="post-header">
-                    <h2><a href="articles/hello-world">Hello, World!</a></h2>
-                    <p class="date">April 19, 2025</p>
-                </div>
-                <div class="tags">
-                    <span class="tag">introduction</span>
-                </div>
-                <p class="description">Exploring the Future: Insights and Ideas on AI, Technology, Robotics, and Autonomous Vehicles.</p>
-            </article>
+            ${articlesHTML}
         </section>
     </main>
 
@@ -60,4 +86,36 @@
 
     <script src="script.js"></script>
 </body>
-</html>
+</html>`;
+}
+
+// Main function to generate the index
+function generateIndex() {
+    const articlesDir = path.join(__dirname, 'articles');
+    const articles = [];
+
+    // Read all directories in the articles folder
+    const dirs = fs.readdirSync(articlesDir, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
+
+    // Read metadata from each article directory
+    for (const dir of dirs) {
+        const metadata = readMetadata(path.join(articlesDir, dir));
+        if (metadata) {
+            articles.push(metadata);
+        }
+    }
+
+    // Sort articles by date (newest first)
+    articles.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
+
+    // Generate and write the index.html file
+    const indexHTML = generateIndexHTML(articles);
+    fs.writeFileSync('index.html', indexHTML, 'utf8');
+
+    console.log('index.html has been generated successfully!');
+}
+
+// Run the generator
+generateIndex(); 
