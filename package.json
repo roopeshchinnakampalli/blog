@@ -1,0 +1,22 @@
+{
+    "name": "roopesh-chinnakampalli",
+    "version": "1.0.0",
+    "description": "Personal space of Roopesh Chinnakampalli",
+    "scripts": {
+        "generate-articles": "node generate-articles.js",
+        "generate-index": "node generate-index.js",
+        "generate-all": "node generate-articles.js && node generate-index.js"
+    },
+    "keywords": [
+        "blog",
+        "ai",
+        "technology",
+        "robotics",
+        "developer"
+    ],
+    "author": "roopesh chinnakampalli",
+    "license": "MIT",
+    "dependencies": {
+        "handlebars": "^4.7.8"
+    }
+} 
