@@ -1,6 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
+const minify = require('html-minifier').minify;
+
+// Minification options
+const minificationOptions = {
+    collapseWhitespace: true,
+    removeComments: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    useShortDoctype: true,
+    minifyCSS: true,
+    minifyJS: true
+};
 
 // Read the template
 const templatePath = path.join(__dirname, 'articles', 'template.html');
@@ -15,11 +28,14 @@ function generateArticle(articleDir) {
     // Generate HTML content
     const htmlContent = template(metadata);
     
+    // Minify the HTML content
+    const minifiedHTML = minify(htmlContent, minificationOptions);
+    
     // Write the HTML file
     const htmlPath = path.join(articleDir, 'index.html');
-    fs.writeFileSync(htmlPath, htmlContent);
+    fs.writeFileSync(htmlPath, minifiedHTML);
     
-    console.log(`Generated: ${htmlPath}`);
+    console.log(`Generated and minified: ${htmlPath}`);
 }
 
 // Function to process all articles
