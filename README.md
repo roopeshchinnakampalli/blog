@@ -10,12 +10,29 @@ A blogging platform designed to share thoughts, ideas, and insights in a clean a
 - No graphics or unnecessary elements
 - System theme preference detection
 - Theme preference persistence
+- HTML minification for optimal performance
+- Development server with live reload
+- SEO-friendly meta tags and structure
 
-## How to Use
+## Development Setup
 
 1. Clone this repository
-2. Open `index.html` in your web browser
-3. Click the "Dark Mode" button in the top-right corner to toggle between light and dark themes
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run serve
+   ```
+4. Open http://localhost:3000 in your web browser
+
+## Available Scripts
+
+- `npm run serve` - Start the development server with live reload
+- `npm run generate-articles` - Generate HTML files for all articles
+- `npm run generate-index` - Generate the main index page
+- `npm run generate-all` - Generate both articles and index page
 
 ## Adding New Blog Posts
 
@@ -27,14 +44,23 @@ To add a new blog post, follow these steps:
    {
        "title": "Your Post Title",
        "slug": "your-post-slug",
+       "date": "Month DD, YYYY",
        "publishedDate": "YYYY-MM-DD",
        "modifiedDate": "YYYY-MM-DD",
-       "tags": ["tag1", "tag2"]
+       "description": "Short description for meta tags",
+       "shortDescription": "Short description for the main page",
+       "tags": ["tag1", "tag2"],
+       "content": "Your article content in HTML format"
    }
    ```
-3. Add the content of your article in an `index.html` file inside the same directory. Use the `template.html` file in the `articles` folder as a reference for the structure.
-4. Run the script `generate-articles.js` to generate the article's HTML file.
-5. Run the script `generate-index.js` to update the main index page with the new article.
+3. Run `npm run generate-all` to generate the article's HTML file and update the main index page.
+
+## Technical Details
+
+- **HTML Minification**: All HTML files are automatically minified to reduce file size and improve loading performance
+- **Development Server**: Uses lite-server for local development with live reload
+- **SEO Optimization**: Includes meta tags for search engines and social media sharing
+- **Performance**: Optimized for fast loading with minified HTML and efficient CSS
 
 ## Customization
 

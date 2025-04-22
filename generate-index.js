@@ -1,5 +1,18 @@
 const fs = require('fs');
 const path = require('path');
+const minify = require('html-minifier').minify;
+
+// Minification options
+const minificationOptions = {
+    collapseWhitespace: true,
+    removeComments: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    useShortDoctype: true,
+    minifyCSS: true,
+    minifyJS: true
+};
 
 // Function to read metadata from a directory
 function readMetadata(dir) {
@@ -20,7 +33,7 @@ function generateArticleHTML(metadata) {
     return `
             <article class="blog-post">
                 <div class="post-header">
-                    <h2><a href="articles/${metadata.slug}">${metadata.title}</a></h2>
+                    <h2><a href="articles/${metadata.slug}/index.html">${metadata.title}</a></h2>
                     <p class="date">${metadata.date}</p>
                 </div>
                 <div class="tags">
@@ -112,9 +125,10 @@ function generateIndex() {
 
     // Generate and write the index.html file
     const indexHTML = generateIndexHTML(articles);
-    fs.writeFileSync('index.html', indexHTML, 'utf8');
+    const minifiedHTML = minify(indexHTML, minificationOptions);
+    fs.writeFileSync('index.html', minifiedHTML, 'utf8');
 
-    console.log('index.html has been generated successfully!');
+    console.log('index.html has been generated and minified successfully!');
 }
 
 // Run the generator
