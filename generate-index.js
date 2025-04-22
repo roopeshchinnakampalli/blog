@@ -33,7 +33,7 @@ function generateArticleHTML(metadata) {
     return `
             <article class="blog-post">
                 <div class="post-header">
-                    <h2><a href="articles/${metadata.slug}">${metadata.title}</a></h2>
+                    <h2><a href="articles/${metadata.slug}/index.html">${metadata.title}</a></h2>
                     <p class="date">${metadata.date}</p>
                 </div>
                 <div class="tags">

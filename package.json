@@ -5,7 +5,8 @@
     "scripts": {
         "generate-articles": "node generate-articles.js",
         "generate-index": "node generate-index.js",
-        "generate-all": "node generate-articles.js && node generate-index.js"
+        "generate-all": "node generate-articles.js && node generate-index.js",
+        "serve": "lite-server"
     },
     "keywords": [
         "blog",
