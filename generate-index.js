@@ -52,6 +52,11 @@ function generateIndexHTML(articles) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
     <meta name="description" content="Personal website of Roopesh Chinnakampalli">
     <meta name="keywords" content="blog, robotics, technology, developer, ai, autonomous vehicles, ev, apps, innovation, entrepreneurship, startups, research, education, technology, robotics, autonomous vehicles, electric vehicles, apps, innovation, entrepreneurship, startups, research">
     <meta name="author" content="Roopesh Chinnakampalli">
@@ -60,8 +65,13 @@ function generateIndexHTML(articles) {
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://roopeshchinnakampalli.com">
     <title>Roopesh Chinnakampalli</title>
+    
+    <!-- Critical CSS -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Non-critical CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
 </head>
 <body>
     <header>
