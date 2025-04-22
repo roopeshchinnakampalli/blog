@@ -12,7 +12,12 @@ const minificationOptions = {
     removeStyleLinkTypeAttributes: true,
     useShortDoctype: true,
     minifyCSS: true,
-    minifyJS: true
+    minifyJS: true,
+    // Preserve these attributes for performance optimization
+    preserveLineBreaks: false,
+    keepClosingSlash: true,
+    customAttrCollapse: /^(media|onload)$/,
+    ignoreCustomComments: [/^!/]
 };
 
 // Read the template
