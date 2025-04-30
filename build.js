@@ -34,6 +34,9 @@ async function build() {
     // Minify and copy CSS
     await minifyCSS('styles.css', 'dist/styles.css');
     
+    // Copy favicon
+    await fs.copy('favicon.ico', 'dist/favicon.ico');
+    
     // Copy HTML files
     await fs.copy('index.html', 'dist/index.html');
     await fs.copy('articles', 'dist/articles', {
