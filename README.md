@@ -10,9 +10,10 @@ A blogging platform designed to share thoughts, ideas, and insights in a clean a
 - No graphics or unnecessary elements
 - System theme preference detection
 - Theme preference persistence
-- HTML minification for optimal performance
+- HTML, CSS, and JavaScript minification for optimal performance
 - Development server with live reload
 - SEO-friendly meta tags and structure
+- Production-ready build process
 
 ## Development Setup
 
@@ -33,6 +34,23 @@ A blogging platform designed to share thoughts, ideas, and insights in a clean a
 - `npm run generate-articles` - Generate HTML files for all articles
 - `npm run generate-index` - Generate the main index page
 - `npm run generate-all` - Generate both articles and index page
+- `npm run build` - Create a production-ready build in the `dist` folder
+- `npm run clean` - Remove the `dist` folder
+
+## Production Build
+
+To create a production-ready build:
+
+1. Run the build command:
+   ```bash
+   npm run build
+   ```
+2. The build process will:
+   - Create a `dist` directory
+   - Minify all JavaScript and CSS files
+   - Copy all necessary files (HTML, favicon, etc.)
+   - Exclude development files (metadata.json, template.html)
+   - Optimize for production deployment
 
 ## Adding New Blog Posts
 
@@ -57,10 +75,11 @@ To add a new blog post, follow these steps:
 
 ## Technical Details
 
-- **HTML Minification**: All HTML files are automatically minified to reduce file size and improve loading performance
+- **Minification**: All HTML, CSS, and JavaScript files are automatically minified to reduce file size and improve loading performance
 - **Development Server**: Uses lite-server for local development with live reload
 - **SEO Optimization**: Includes meta tags for search engines and social media sharing
-- **Performance**: Optimized for fast loading with minified HTML and efficient CSS
+- **Performance**: Optimized for fast loading with minified assets and efficient CSS
+- **Build Process**: Production-ready build system that creates optimized files in the `dist` directory
 
 ## Customization
 
