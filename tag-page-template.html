@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles tagged with "{{tag}}" - Roopesh Chinnakampalli</title>
+    <link rel="stylesheet" href="../styles.css"> <!-- Assuming styles.css is in the root -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="Articles tagged with {{tag}}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="../index.html">Roopesh Chinnakampalli</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#contact">Contact</a>
+                <a href="../index.html#blog">Blog</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h1>Articles tagged with "{{tag}}"</h1>
+        <section class="blog-posts">
+            {{#each articles}}
+            <article class="blog-post">
+                <div class="post-header">
+                    <h2><a href="../{{this.path}}">{{this.title}}</a></h2> <!-- Path relative to tags/ directory -->
+                    <p class="date">{{this.date}}</p>
+                </div>
+                <p class="description">{{this.shortDescription}}</p>
+            </article>
+            {{/each}}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Roopesh Chinnakampalli. All rights reserved.</p>
+    </footer>
+    <script src="../script.js"></script> <!-- Assuming script.js is in the root -->
+</body>
+</html>

@@ -41,12 +41,14 @@
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://roopeshchinnakampalli.com/articles/{{slug}}/">
+    <link rel="alternate" type="application/rss+xml" title="Roopesh Chinnakampalli Blog RSS Feed" href="../../rss.xml">
     
     <!-- Critical CSS -->
     <link rel="stylesheet" href="../../styles.css">
     
-    <!-- Non-critical CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+    <!-- Font Awesome CSS -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
 </head>
 <body>
@@ -63,9 +65,10 @@
         <article class="blog-post">
             <h2>{{title}}</h2>
             <p class="date">{{date}}</p>
+            <p class="reading-time">{{readingTime}}</p>
             <div class="tags">
                 {{#each tags}}
-                <span class="tag">{{this}}</span>
+                <a href="../../tags/{{this}}.html" class="tag">{{this}}</a>
                 {{/each}}
             </div>
             <div class="content">
