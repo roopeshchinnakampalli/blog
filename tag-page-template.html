@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles tagged with "{{tag}}" - Roopesh Chinnakampalli</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="Articles tagged with {{tag}}">
+    <!-- Font Awesome CSS -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><a href="../index.html" style="text-decoration: none; color: inherit;">Roopesh Chinnakampalli</a></h1>
+            <button id="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-sun"></i>
+            </button>
+        </nav>
+    </header>
+    <main>
+        <h1>Articles tagged with '{{tag}}'</h1>
+        <section class="blog-posts">
+            {{#each articles}}
+            <article class="blog-post">
+                <div class="post-header">
+                    <h2><a href="../{{this.path}}">{{this.title}}</a></h2>
+                    <p class="date">{{this.date}}</p>
+                    <p class="reading-time">{{this.readingTime}}</p>
+                </div>
+                <div class="tags">
+                    {{#each this.tags}}
+                    <a href="../tags/{{this}}.html" class="tag">{{this}}</a>
+                    {{/each}}
+                </div>
+                <p class="description">{{this.shortDescription}}</p>
+            </article>
+            {{/each}}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Roopesh Chinnakampalli. All rights reserved.</p>
+    </footer>
+    <script src="../script.js"></script> <!-- Assuming script.js is in the root -->
+</body>
+</html>

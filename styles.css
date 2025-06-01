@@ -8,11 +8,13 @@
     --content-padding: 1rem;
     --header-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     --footer-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    --text-color-secondary: #555555; /* For reading time, etc. */
 }
 
 [data-theme="dark"] {
     --bg-color: #121212;
     --text-color: #ffffff;
+    --text-color-secondary: #aaaaaa; /* For reading time in dark mode */
     --border-color: #333333;
     --header-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     --footer-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
@@ -83,6 +85,18 @@ main {
     width: 100%;
 }
 
+main > h1 { /* For tag page titles, etc. */
+    font-size: 1.75rem; /* Or clamp value if responsive needed */
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    /* Resetting any global H1 styles that might interfere, like background-clip */
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background: none;
+}
+
 .blog-posts {
     display: grid;
     gap: 2rem;
@@ -128,6 +142,19 @@ main {
     font-size: 0.875rem;
     margin: 0;
 }
+
+[data-theme="dark"] .date {
+    color: #bbbbbb; /* Lighter gray for dark mode */
+}
+
+.reading-time {
+    font-size: 0.85em;
+    color: var(--text-color-secondary);
+    margin-top: -0.25rem; /* Adjust to be closer to the date */
+    margin-bottom: 0.75rem; /* Space before tags or description */
+}
+
+/* No specific dark theme override needed if --text-color-secondary is used from [data-theme="dark"] */
 
 .description {
     margin: 0.75rem 0 0;
@@ -215,7 +242,7 @@ footer p a:focus {
 #theme-toggle:focus {
     background-color: var(--text-color);
     color: var(--bg-color);
-    outline: none;
+    /* outline: none; Removed for better accessibility */
 }
 
 #theme-toggle:focus-visible {
@@ -281,6 +308,10 @@ footer p a:focus {
     
     .post-header .date {
         align-self: flex-start;
+    }
+    .post-header .reading-time { /* Ensure reading time also aligns start in column layout */
+        align-self: flex-start;
+        margin-top: -0.1rem; /* Fine tune for column layout */
     }
 
     nav {
@@ -361,3 +392,35 @@ footer p a:focus {
 .content p {
     margin-bottom: 1.25em;
 }
+
+/* General focus styles for accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+    border-radius: 2px; /* Optional: adds slight rounding to the outline */
+}
+
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] button:focus-visible,
+[data-theme="dark"] input:focus-visible,
+[data-theme="dark"] textarea:focus-visible,
+[data-theme="dark"] select:focus-visible {
+    outline-color: var(--text-color); /* In dark theme, --text-color is light */
+}
+
+/* Fallback for non-L4 browsers or if :focus-visible is not specific enough */
+/* You might not need this if :focus-visible above covers all your needs */
+/*
+a:focus, button:focus, input:focus, textarea:focus, select:focus {
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+}
+
+[data-theme="dark"] a:focus,
+[data-theme="dark"] button:focus,
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+    outline-color: var(--text-color);
+}
+*/
