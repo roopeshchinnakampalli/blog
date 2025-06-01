@@ -25,21 +25,38 @@ async function generateTagPages() {
             // Process only directories, skip template.html and any other files
             if (stat.isDirectory()) {
                 const metadataPath = path.join(articlePath, 'metadata.json');
-                if (await fs.exists(metadataPath)) {
+                if (await fs.pathExists(metadataPath)) { // fs-extra uses pathExists
                     const metadata = await fs.readJson(metadataPath);
+
+                    // Calculate reading time
+                    let readingTimeText = "";
+                    const markdownPath = path.join(articlePath, 'article.md');
+                    if (await fs.pathExists(markdownPath)) {
+                        const markdownContent = await fs.readFile(markdownPath, 'utf8');
+                        const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, '');
+                        const words = textContent.split(/\s+/).filter(Boolean);
+                        const wordCount = words.length;
+                        const wpm = 225;
+                        const minutes = Math.max(1, Math.round(wordCount / wpm));
+                        readingTimeText = minutes + " min read";
+                    }
+
                     if (metadata.tags && metadata.tags.length > 0) {
+                        const articleDetails = {
+                            title: metadata.title,
+                            date: metadata.date,
+                            shortDescription: metadata.shortDescription,
+                            path: path.join('articles', folder, 'index.html').replace(/\\/g, '/'),
+                            slug: metadata.slug,
+                            readingTime: readingTimeText,
+                            tags: metadata.tags // Pass along the article's own tags
+                        };
+
                         metadata.tags.forEach(tag => {
                             if (!tagsMap[tag]) {
                                 tagsMap[tag] = [];
                             }
-                            tagsMap[tag].push({
-                                title: metadata.title,
-                                date: metadata.date,
-                                shortDescription: metadata.shortDescription,
-                                // Path relative to the root, for linking from tags/tag-name.html
-                                path: path.join('articles', folder, 'index.html').replace(/\\/g, '/'),
-                                slug: metadata.slug
-                            });
+                            tagsMap[tag].push(articleDetails);
                         });
                     }
                 }

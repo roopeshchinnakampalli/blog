@@ -85,6 +85,18 @@ main {
     width: 100%;
 }
 
+main > h1 { /* For tag page titles, etc. */
+    font-size: 1.75rem; /* Or clamp value if responsive needed */
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    /* Resetting any global H1 styles that might interfere, like background-clip */
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background: none;
+}
+
 .blog-posts {
     display: grid;
     gap: 2rem;
