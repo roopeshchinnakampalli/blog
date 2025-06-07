@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
+const marked = require('marked');
 const minify = require('html-minifier').minify;
 
 // Minification options
@@ -30,8 +31,22 @@ function generateArticle(articleDir) {
     const metadataPath = path.join(articleDir, 'metadata.json');
     const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
     
+    const markdownPath = path.join(articleDir, 'article.md');
+    const markdownContent = fs.readFileSync(markdownPath, 'utf8');
+
+    // Calculate reading time
+    const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, ''); // Strip HTML/MD tags and front matter
+    const words = textContent.split(/\s+/).filter(Boolean);
+    const wordCount = words.length;
+    const wpm = 225; // Average words per minute
+    const minutes = Math.max(1, Math.round(wordCount / wpm)); // Ensure at least 1 min
+    const readingTimeText = minutes + " min read";
+
+    const htmlFromMarkdown = marked.parse(markdownContent);
+
     // Generate HTML content
-    const htmlContent = template(metadata);
+    const articleData = { ...metadata, content: htmlFromMarkdown, readingTime: readingTimeText };
+    const htmlContent = template(articleData);
     
     // Minify the HTML content
     const minifiedHTML = minify(htmlContent, minificationOptions);
