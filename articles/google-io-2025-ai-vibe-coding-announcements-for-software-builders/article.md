@@ -1,7 +1,5 @@
 Google I/O 2025 was packed with exciting updates for anyone building software, especially in the AI and “vibe coding” spaces. Here’s a concise, developer-focused summary of the key announcements.
 
----
-
 ### AI Announcements: What’s New for Developers
 
 - **Gemini 2.5 Pro & Flash**
@@ -30,23 +28,17 @@ Google I/O 2025 was packed with exciting updates for anyone building software, e
 - **Native Audio Output & Dialogue**
   - Gemini 2.5 now offers advanced text-to-speech (TTS) for multi-speaker, customizable audio responses—control voice style, accent, and pace.
 
----
-
 ### Vibe Coding: Live, Collaborative Coding Onstage
 
 - Google showcased “vibe coding” by building productivity apps live at I/O 2025.
   - Example: Google engineers created a to-do list app in real time, showing collaborative, improvisational coding with AI assistance.
   - This approach highlighted how AI tools can speed up prototyping and make coding more interactive and creative.
 
----
-
 ### Why This Matters for Software Builders
 
 - AI is now deeply integrated into every stage of software development—from prototyping and UI design to automation and deployment.
 - Tools like Gemini 2.5, Stitch, and Project Mariner help you build smarter, faster, and more collaboratively.
 - The focus on agentic experiences and hands-free automation means you can create applications that act more like intelligent assistants than static tools.
-
----
 
 ### Explore More
 

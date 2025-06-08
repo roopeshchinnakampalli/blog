@@ -390,8 +390,54 @@ footer p a:focus {
 }
 
 .content p {
-    margin-bottom: 1.25em;
+    margin-top: 0; /* Usually, space is controlled by previous element's margin-bottom */
+    margin-bottom: 1.25em; /* Existing rule, seems fine */
+    line-height: 1.7; /* Slightly more line height for readability in paragraphs */
 }
+
+/* Base styling for headings within article content */
+.blog-post .content h1,
+.blog-post .content h2,
+.blog-post .content h3,
+.blog-post .content h4,
+.blog-post .content h5,
+.blog-post .content h6 {
+    line-height: 1.3; /* Consistent line-height for headers */
+    color: var(--text-color); /* Ensure headers use theme text color */
+    /* font-weight might be browser default or set per heading level */
+}
+
+/* Specific styling for H3 in article content */
+.blog-post .content h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-top: 2.2em;   /* Increased top margin for clear section separation */
+    margin-bottom: 1em;  /* Space between h3 and its content */
+}
+
+/* Styling for lists within article content */
+.blog-post .content ul,
+.blog-post .content ol {
+    margin-top: 0; /* Let previous element's margin-bottom handle space */
+    margin-bottom: 1.25em; /* Consistent with paragraphs */
+    padding-left: 1.5em; /* Standard indentation for lists */
+}
+
+.blog-post .content ul li,
+.blog-post .content ol li {
+    margin-bottom: 0.5em; /* Space between list items */
+    line-height: 1.7; /* Match paragraph line height for readability */
+}
+
+/* Styling for nested lists */
+.blog-post .content ul ul,
+.blog-post .content ol ol,
+.blog-post .content ul ol,
+.blog-post .content ol ul {
+    margin-top: 0.5em;    /* Space above nested lists */
+    margin-bottom: 0.5em; /* Space below nested lists */
+}
+
 
 /* Styling for links within blog post content */
 .blog-post .content a {
