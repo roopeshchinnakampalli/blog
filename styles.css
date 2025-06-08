@@ -393,6 +393,36 @@ footer p a:focus {
     margin-bottom: 1.25em;
 }
 
+/* Styling for links within blog post content */
+.blog-post .content a {
+    color: inherit; /* Match surrounding text color */
+    font-weight: inherit; /* Match surrounding text font-weight */
+    text-decoration: none; /* Remove underline by default */
+    /* border-bottom: 1px solid var(--text-color-secondary); Optional: subtle underline */
+}
+
+.blog-post .content a::after {
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome"; /* Stack for compatibility */
+    content: "\f0c1"; /* fa-link */
+    font-weight: 900;  /* Solid icon */
+    font-size: 0.8em;
+    margin-left: 0.3em;
+    text-decoration: none; /* Ensure icon is not underlined */
+    display: inline-block;
+    vertical-align: middle; /* Better alignment with text */
+    transition: transform 0.2s ease-out; /* Optional: subtle hover effect on icon */
+}
+
+.blog-post .content a:hover,
+.blog-post .content a:focus {
+    text-decoration: underline; /* Re-add underline on hover/focus */
+    /* color: var(--link-hover-color); Optional: if you have a specific hover color */
+}
+
+.blog-post .content a:hover::after {
+    transform: translateX(1px) scale(1.05); /* Optional: subtle hover effect on icon */
+}
+
 /* General focus styles for accessibility */
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
     outline: 2px solid var(--text-color);

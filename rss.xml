@@ -5,7 +5,6 @@
     <link>https://roopeshchinnakampalli.com</link>
     <description>Exploring the Future: Insights and Ideas on AI, Technology, Robotics, and Autonomous Vehicles.</description>
     <language>en-us</language>
-
     <lastBuildDate>Sun, 08 Jun 2025 15:24:32 GMT</lastBuildDate>
     <atom:link href="https://roopeshchinnakampalli.com/rss.xml" rel="self" type="application/rss+xml" />
 
@@ -17,6 +16,7 @@
         <description>Google I/O 2025 was packed with exciting updates for anyone building software, especially in the AI and “vibe coding” spaces. Here’s a concise, developer-focused summary of the key announcements.</description>
     </item>
 
+    <item>
         <title>Hello, World!</title>
         <link>https://roopeshchinnakampalli.com/articles/hello-world/</link>
         <guid isPermaLink="true">https://roopeshchinnakampalli.com/articles/hello-world/</guid>
