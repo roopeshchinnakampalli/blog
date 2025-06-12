@@ -63,8 +63,21 @@ async function generateTagPages() {
             }
         }
 
-        // Ensure output directory exists
-        await fs.ensureDir(outputDir);
+        // Clean the tags directory before generating new pages
+        if (await fs.pathExists(outputDir)) {
+            const files = await fs.readdir(outputDir);
+            for (const file of files) {
+                if (file.endsWith('.html')) {
+                    await fs.unlink(path.join(outputDir, file));
+                    console.log(`Deleted old tag page: ${path.join(outputDir, file)}`);
+                }
+            }
+        } else {
+            await fs.ensureDir(outputDir); // Ensure tags dir exists if it was never created
+        }
+        // We still call ensureDir later, which is fine; it won't error if dir exists.
+        // Or, ensureDir can be called here and removed from later if preferred.
+        // For now, leaving the later ensureDir as it's harmless.
 
         // Generate a page for each tag
         for (const tag in tagsMap) {
