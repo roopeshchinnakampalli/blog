@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{{relativePath}}styles.css" as="style">
+    <link rel="preload" href="{{relativePath}}script.js" as="script">
+
+    <title>{{pageTitle}}</title>
+    <meta name="description" content="{{description}}">
+    {{#if keywords}}
+    <meta name="keywords" content="{{keywords}}">
+    {{/if}}
+    <meta name="author" content="Roopesh Chinnakampalli">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{pageTitle}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:type" content="{{#if isArticle}}article{{else}}website{{/if}}">
+    {{#if url}}
+    <meta property="og:url" content="{{url}}">
+    <link rel="canonical" href="{{url}}">
+    {{/if}}
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{relativePath}}styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+
+    {{{headContent}}}
+</head>
+<body>
+    {{> header}}
+
+    <main>
+        {{{body}}}
+    </main>
+
+    {{> footer}}
+
+    <script src="{{relativePath}}script.js"></script>
+</body>
+</html>
