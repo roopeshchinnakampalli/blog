@@ -45,6 +45,7 @@ function generateArticleListItem(metadata) {
                     <h2><a href="articles/${metadata.slug}/index.html">${metadata.title}</a></h2>
                     <p class="date">${metadata.date}</p>
                 </div>
+                <p>${metadata.shortDescription || metadata.description}</p>
             </article>`;
 }
 
