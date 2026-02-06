@@ -44,6 +44,7 @@ function generateArticleListItem(metadata) {
                 <div class="post-header">
                     <h2><a href="articles/${metadata.slug}/index.html">${metadata.title}</a></h2>
                     <p class="date">${metadata.date}</p>
+                    <p class="reading-time">${metadata.readingTime}</p>
                 </div>
                 <p>${metadata.shortDescription || metadata.description}</p>
             </article>`;
@@ -61,8 +62,22 @@ function generateIndex() {
 
     // Read metadata from each article directory
     for (const dir of dirs) {
-        const metadata = readMetadata(path.join(articlesDir, dir));
+        const articleDirPath = path.join(articlesDir, dir);
+        const metadata = readMetadata(articleDirPath);
         if (metadata) {
+            // Calculate reading time
+            const markdownPath = path.join(articleDirPath, 'article.md');
+            if (fs.existsSync(markdownPath)) {
+                const markdownContent = fs.readFileSync(markdownPath, 'utf8');
+                const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, ''); // Strip HTML/MD tags and front matter
+                const words = textContent.split(/\s+/).filter(Boolean);
+                const wordCount = words.length;
+                const wpm = 225; // Average words per minute
+                const minutes = Math.max(1, Math.round(wordCount / wpm)); // Ensure at least 1 min
+                metadata.readingTime = minutes + " min read";
+            } else {
+                metadata.readingTime = ""; // Or some default if article.md is missing
+            }
             articles.push(metadata);
         }
     }
