@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Handlebars = require('handlebars');
 const minify = require('html-minifier').minify;
 
 // Minification options
@@ -14,6 +15,17 @@ const minificationOptions = {
     minifyJS: true
 };
 
+// Register partials
+const headerPartial = fs.readFileSync(path.join(__dirname, 'templates', 'partials', 'header.html'), 'utf8');
+const footerPartial = fs.readFileSync(path.join(__dirname, 'templates', 'partials', 'footer.html'), 'utf8');
+Handlebars.registerPartial('header', headerPartial);
+Handlebars.registerPartial('footer', footerPartial);
+
+// Read and compile layout
+const layoutPath = path.join(__dirname, 'templates', 'layout.html');
+const layoutContent = fs.readFileSync(layoutPath, 'utf8');
+const layoutTemplate = Handlebars.compile(layoutContent);
+
 // Function to read metadata from a directory
 function readMetadata(dir) {
     const metadataPath = path.join(dir, 'metadata.json');
@@ -24,13 +36,9 @@ function readMetadata(dir) {
     return null;
 }
 
-// Function to generate the HTML for a single article
-function generateArticleHTML(metadata) {
-    const tagsHTML = metadata.tags.map(tag => {
-        const safeTagName = tag.toLowerCase().replace(/\s+/g, '-');
-        return `<a href="tags/${safeTagName}.html" class="tag">${tag}</a>`;
-    }).join('\n');
-
+// Function to generate the HTML for a single article list item
+function generateArticleListItem(metadata) {
+    // New simplified format: Title + Date only
     return `
             <article class="blog-post">
                 <div class="post-header">
@@ -38,82 +46,7 @@ function generateArticleHTML(metadata) {
                     <p class="date">${metadata.date}</p>
                     <p class="reading-time">${metadata.readingTime}</p>
                 </div>
-                <div class="tags">
-                    ${tagsHTML}
-                </div>
-                <p class="description">${metadata.shortDescription}</p>
             </article>`;
-}
-
-// Function to generate the complete index.html
-function generateIndexHTML(articles) {
-    const articlesHTML = articles.map(generateArticleHTML).join('\n');
-
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="script.js" as="script">
-    
-    <meta name="description" content="Personal website of Roopesh Chinnakampalli">
-    <meta name="keywords" content="blog, robotics, technology, developer, ai, autonomous vehicles, ev, apps, innovation, entrepreneurship, startups, research, education, technology, robotics, autonomous vehicles, electric vehicles, apps, innovation, entrepreneurship, startups, research">
-    <meta name="author" content="Roopesh Chinnakampalli">
-    <meta property="og:title" content="Roopesh Chinnakampalli">
-    <meta property="og:description" content="Personal website of Roopesh Chinnakampalli">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="https://roopeshchinnakampalli.com">
-    <link rel="alternate" type="application/rss+xml" title="Roopesh Chinnakampalli Blog RSS Feed" href="/rss.xml">
-    <title>Roopesh Chinnakampalli</title>
-    
-    <!-- Critical CSS -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Font Awesome CSS -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" as="style">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
-</head>
-<body>
-    <header>
-        <nav>
-            <h1>Roopesh Chinnakampalli</h1>
-            <button id="theme-toggle" aria-label="Toggle dark mode">
-                <i class="fas fa-sun"></i>
-            </button>
-        </nav>
-    </header>
-
-    <main>
-        <section class="blog-posts">
-            ${articlesHTML}
-        </section>
-    </main>
-
-    <footer>
-        <div class="social-links">
-            <a href="https://github.com/roopeshchinnakampalli" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://x.com/roopesh_reddy" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-x-twitter"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/roopeshreddy/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://instagram.com/roopeshreddyc" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
-        <p>Made with ❤️ by <a href="https://github.com/roopeshchinnakampalli">roopesh</a></p>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>`;
 }
 
 // Main function to generate the index
@@ -151,13 +84,34 @@ function generateIndex() {
     // Sort articles by date (newest first)
     articles.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
 
-    // Generate and write the index.html file
-    const indexHTML = generateIndexHTML(articles);
-    const minifiedHTML = minify(indexHTML, minificationOptions);
+    // Generate articles list HTML
+    const articlesHTML = articles.map(generateArticleListItem).join('\n');
+
+    // Wrap in section
+    const bodyContent = `
+        <section class="blog-posts">
+            ${articlesHTML}
+        </section>
+    `;
+
+    // Prepare context for layout
+    const context = {
+        pageTitle: 'Roopesh Chinnakampalli',
+        description: 'Personal website of Roopesh Chinnakampalli',
+        keywords: 'blog, robotics, technology, developer, ai, autonomous vehicles, ev, apps, innovation, entrepreneurship, startups, research, education, technology, robotics, autonomous vehicles, electric vehicles, apps, innovation, entrepreneurship, startups, research',
+        isArticle: false,
+        url: 'https://roopeshchinnakampalli.com',
+        relativePath: '',
+        body: bodyContent
+    };
+
+    // Generate full HTML
+    const fullHTML = layoutTemplate(context);
+    const minifiedHTML = minify(fullHTML, minificationOptions);
     fs.writeFileSync('index.html', minifiedHTML, 'utf8');
 
     console.log('index.html has been generated and minified successfully!');
 }
 
 // Run the generator
-generateIndex(); 
+generateIndex();

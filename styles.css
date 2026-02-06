@@ -1,25 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
 :root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --border-color: #e0e0e0;
-    --header-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    --footer-bg: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
-    --max-width: 800px;
-    --content-padding: 1rem;
-    --header-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    --footer-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    --text-color-secondary: #555555; /* For reading time, etc. */
+    /* Light Theme */
+    --bg-color: #fafafa;
+    --card-bg: #ffffff;
+    --text-color: #1a1a1a;
+    --text-muted: #666666;
+    --accent-color: #2563eb; /* Muted royal blue */
+    --border-color: #e5e5e5;
+
+    --header-bg: rgba(250, 250, 250, 0.9);
+
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    --max-width: 720px;
+    --content-padding: 1.5rem;
+
+    --radius: 8px;
+    --transition: 0.2s ease-in-out;
 }
 
 [data-theme="dark"] {
-    --bg-color: #121212;
-    --text-color: #ffffff;
-    --text-color-secondary: #aaaaaa; /* For reading time in dark mode */
-    --border-color: #333333;
-    --header-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    --footer-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-    --header-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    --footer-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    /* Dark Theme */
+    --bg-color: #111111;
+    --card-bg: #1a1a1a;
+    --text-color: #f3f4f6;
+    --text-muted: #9ca3af;
+    --accent-color: #60a5fa; /* Lighter blue for dark mode */
+    --border-color: #262626;
+
+    --header-bg: rgba(17, 17, 17, 0.9);
 }
 
 * {
@@ -31,29 +41,41 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.6;
+    font-family: var(--font-main);
+    line-height: 1.7;
     background-color: var(--bg-color);
     color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Header */
 header {
     background: var(--header-bg);
-    padding: var(--content-padding);
-    border-bottom: 1px solid var(--border-color);
+    padding: 2rem var(--content-padding);
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: var(--header-shadow);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 nav {
@@ -62,441 +84,210 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 1rem;
-    padding: 0.5rem 0;
 }
 
 h1 {
-    font-size: clamp(1.25rem, 5vw, 1.5rem);
+    font-size: 1.25rem;
     font-weight: 600;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--text-color) 0%, #666 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: -0.02em;
+    color: var(--text-color);
 }
 
+h1 a:hover {
+    color: var(--text-color); /* Don't change color on hover for logo */
+    opacity: 0.8;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    transition: background-color var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#theme-toggle:hover {
+    background-color: var(--border-color);
+}
+
+/* Main Content */
 main {
     max-width: var(--max-width);
-    margin: 2rem auto;
-    padding: 0 var(--content-padding);
-    flex: 1;
+    margin: 0 auto;
+    padding: 1rem var(--content-padding) 4rem;
     width: 100%;
+    flex: 1;
 }
 
-main > h1 { /* For tag page titles, etc. */
-    font-size: 1.75rem; /* Or clamp value if responsive needed */
-    color: var(--text-color);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border-color);
-    /* Resetting any global H1 styles that might interfere, like background-clip */
-    -webkit-background-clip: initial;
-    -webkit-text-fill-color: initial;
-    background: none;
-}
-
+/* Blog List */
 .blog-posts {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
 }
 
 .blog-post {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.blog-post:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    display: block;
 }
 
 .post-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 0.5rem;
+    gap: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition);
 }
+
+/* In the list view, we want the whole row to be clickable/hoverable ideally,
+   but since the markup has the link inside the H2, we style that. */
 
 .post-header h2 {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-.post-header h2 a {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.post-header h2 a:hover {
-    color: var(--text-color);
-    text-decoration: underline;
-}
-
-.date {
-    color: #444;
-    font-size: 0.875rem;
-    margin: 0;
-}
-
-[data-theme="dark"] .date {
-    color: #bbbbbb; /* Lighter gray for dark mode */
-}
-
-.reading-time {
-    font-size: 0.85em;
-    color: var(--text-color-secondary);
-    margin-top: -0.25rem; /* Adjust to be closer to the date */
-    margin-bottom: 0.75rem; /* Space before tags or description */
-}
-
-/* No specific dark theme override needed if --text-color-secondary is used from [data-theme="dark"] */
-
-.description {
-    margin: 0.75rem 0 0;
-    color: var(--text-color);
-    opacity: 0.9;
-    line-height: 1.5;
-}
-
-footer {
-    text-align: center;
-    padding: 1rem var(--content-padding);
-    background: var(--footer-bg);
-    border-top: 1px solid var(--border-color);
-    margin-top: auto;
-    box-shadow: var(--footer-shadow);
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.25rem;
-    margin-bottom: 0.75rem;
-}
-
-.social-links a {
-    color: var(--text-color);
-    font-size: 1.25rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-    opacity: 0.8;
-}
-
-.social-links a:hover,
-.social-links a:focus {
-    transform: translateY(-3px);
-    opacity: 1;
-}
-
-.social-links a:focus-visible {
-    outline: 2px solid var(--text-color);
-    outline-offset: 2px;
-    border-radius: 4px;
-}
-
-footer p {
-    margin: 0;
-    font-size: 0.875rem;
-    opacity: 0.8;
-}
-
-footer p a {
-    color: var(--text-color);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-footer p a:hover,
-footer p a:focus {
-    border-bottom-color: var(--text-color);
-    opacity: 1;
-}
-
-#theme-toggle {
-    background: none;
-    border: 1px solid var(--text-color);
-    color: var(--text-color);
-    padding: 0.5rem;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#theme-toggle i {
     font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
 }
 
-#theme-toggle:hover,
-#theme-toggle:focus {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    /* outline: none; Removed for better accessibility */
+.post-header .date {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
 }
 
-#theme-toggle:focus-visible {
-    outline: 2px solid var(--text-color);
-    outline-offset: 2px;
+/* Hover effect for list items */
+.blog-posts .blog-post:hover .post-header h2 a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
 }
 
-/* Print styles */
-@media print {
-    :root {
-        --bg-color: #ffffff;
-        --text-color: #000000;
-        --border-color: #000000;
-        --header-bg: #ffffff;
-    }
-
-    header, footer {
-        display: none;
-    }
-
-    main {
-        margin: 0;
-        padding: 0;
-    }
-
-    .blog-post {
-        page-break-inside: avoid;
-    }
+/* Article Page */
+article.blog-post h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
 }
 
-/* Responsive breakpoints */
-@media (max-width: 768px) {
-    :root {
-        --content-padding: 0.75rem;
-    }
-
-    main {
-        margin: 1rem auto;
-    }
-
-    .blog-posts {
-        gap: 1.5rem;
-    }
-
-    .social-links {
-        gap: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .social-links a {
-        font-size: 1.1rem;
-    }
-
-    .tag {
-        padding: 0.2rem 0.6rem;
-        font-size: 0.7rem;
-    }
-
-    .post-header {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-    
-    .post-header .date {
-        align-self: flex-start;
-    }
-    .post-header .reading-time { /* Ensure reading time also aligns start in column layout */
-        align-self: flex-start;
-        margin-top: -0.1rem; /* Fine tune for column layout */
-    }
-
-    nav {
-        padding: 0.25rem 0;
-    }
-}
-
-@media (max-width: 480px) {
-    :root {
-        --content-padding: 0.5rem;
-    }
-
-    nav {
-        flex-wrap: nowrap;
-        padding: 0.25rem 0;
-    }
-
-    #theme-toggle {
-        margin-left: auto;
-    }
-
-    footer {
-        padding: 0.75rem var(--content-padding);
-    }
-    
-    .social-links {
-        gap: 0.75rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .social-links a {
-        font-size: 1rem;
-    }
-
-    .tags {
-        gap: 0.4rem;
-    }
-    
-    .tag {
-        padding: 0.15rem 0.5rem;
-    }
-
-    .post-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .description {
-        font-size: 0.9rem;
-    }
+article.blog-post .date {
+    display: block;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1rem;
 }
 
 .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 0.75rem 0;
+    margin-bottom: 2rem;
 }
 
 .tag {
-    background-color: var(--header-bg);
-    color: var(--text-color);
-    padding: 0.25rem 0.75rem;
-    border-radius: 16px;
     font-size: 0.75rem;
+    color: var(--text-muted);
+    background-color: var(--border-color); /* Subtle bg */
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
     font-weight: 500;
-    letter-spacing: 0.3px;
+    background: transparent;
     border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-    cursor: default;
 }
 
-.tag:hover {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    transform: translateY(-1px);
+.content {
+    font-size: 1.05rem; /* Slightly larger for reading */
+    color: var(--text-color);
 }
 
 .content p {
-    margin-top: 0; /* Usually, space is controlled by previous element's margin-bottom */
-    margin-bottom: 1.25em; /* Existing rule, seems fine */
-    line-height: 1.7; /* Slightly more line height for readability in paragraphs */
+    margin-bottom: 1.5em;
 }
 
-/* Base styling for headings within article content */
-.blog-post .content h1,
-.blog-post .content h2,
-.blog-post .content h3,
-.blog-post .content h4,
-.blog-post .content h5,
-.blog-post .content h6 {
-    line-height: 1.3; /* Consistent line-height for headers */
-    color: var(--text-color); /* Ensure headers use theme text color */
-    /* font-weight might be browser default or set per heading level */
-}
-
-/* Specific styling for H3 in article content */
-.blog-post .content h3 {
-    font-size: 1.5em;
+.content h3 {
+    margin: 2rem 0 1rem;
+    font-size: 1.4rem;
     font-weight: 600;
-    margin-top: 2.2em;   /* Increased top margin for clear section separation */
-    margin-bottom: 1em;  /* Space between h3 and its content */
+    letter-spacing: -0.01em;
 }
 
-/* Styling for lists within article content */
-.blog-post .content ul,
-.blog-post .content ol {
-    margin-top: 0; /* Let previous element's margin-bottom handle space */
-    margin-bottom: 1.25em; /* Consistent with paragraphs */
-    padding-left: 1.5em; /* Standard indentation for lists */
+.content ul, .content ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
 }
 
-.blog-post .content ul li,
-.blog-post .content ol li {
-    margin-bottom: 0.5em; /* Space between list items */
-    line-height: 1.7; /* Match paragraph line height for readability */
+.content li {
+    margin-bottom: 0.5em;
 }
 
-/* Styling for nested lists */
-.blog-post .content ul ul,
-.blog-post .content ol ol,
-.blog-post .content ul ol,
-.blog-post .content ol ul {
-    margin-top: 0.5em;    /* Space above nested lists */
-    margin-bottom: 0.5em; /* Space below nested lists */
+.content a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
-
-/* Styling for links within blog post content */
-.blog-post .content a {
-    color: inherit; /* Match surrounding text color */
-    font-weight: inherit; /* Match surrounding text font-weight */
-    text-decoration: none; /* Remove underline by default */
-    /* border-bottom: 1px solid var(--text-color-secondary); Optional: subtle underline */
+.content a:hover {
+    color: var(--text-color);
 }
 
-.blog-post .content a::after {
-    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome"; /* Stack for compatibility */
-    content: "\f0c1"; /* fa-link */
-    font-weight: 900;  /* Solid icon */
-    font-size: 0.8em;
-    margin-left: 0.3em;
-    text-decoration: none; /* Ensure icon is not underlined */
-    display: inline-block;
-    vertical-align: middle; /* Better alignment with text */
-    transition: transform 0.2s ease-out; /* Optional: subtle hover effect on icon */
+/* Footer */
+footer {
+    padding: 3rem var(--content-padding);
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
 }
 
-.blog-post .content a:hover,
-.blog-post .content a:focus {
-    text-decoration: underline; /* Re-add underline on hover/focus */
-    /* color: var(--link-hover-color); Optional: if you have a specific hover color */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.blog-post .content a:hover::after {
-    transform: translateX(1px) scale(1.05); /* Optional: subtle hover effect on icon */
+.social-links a {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    transition: all var(--transition);
 }
 
-/* General focus styles for accessibility */
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 2px solid var(--text-color);
-    outline-offset: 2px;
-    border-radius: 2px; /* Optional: adds slight rounding to the outline */
+.social-links a:hover {
+    color: var(--text-color);
+    transform: translateY(-2px);
 }
 
-[data-theme="dark"] a:focus-visible,
-[data-theme="dark"] button:focus-visible,
-[data-theme="dark"] input:focus-visible,
-[data-theme="dark"] textarea:focus-visible,
-[data-theme="dark"] select:focus-visible {
-    outline-color: var(--text-color); /* In dark theme, --text-color is light */
+footer p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
 }
 
-/* Fallback for non-L4 browsers or if :focus-visible is not specific enough */
-/* You might not need this if :focus-visible above covers all your needs */
-/*
-a:focus, button:focus, input:focus, textarea:focus, select:focus {
-    outline: 2px solid var(--text-color);
-    outline-offset: 2px;
+/* Mobile */
+@media (max-width: 600px) {
+    :root {
+        --content-padding: 1rem;
+    }
+    
+    .post-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .post-header .date {
+        font-size: 0.8rem;
+    }
+    
+    article.blog-post h2 {
+        font-size: 1.75rem;
+    }
 }
-
-[data-theme="dark"] a:focus,
-[data-theme="dark"] button:focus,
-[data-theme="dark"] input:focus,
-[data-theme="dark"] textarea:focus,
-[data-theme="dark"] select:focus {
-    outline-color: var(--text-color);
-}
-*/
