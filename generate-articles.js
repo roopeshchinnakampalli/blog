@@ -38,6 +38,7 @@ function generateArticle(articleDir) {
     
     // Validate metadata
     if (!metadata.content) {
+        console.error(`Metadata keys found: ${Object.keys(metadata).join(', ')}`);
         throw new Error(`Content missing for article: ${metadata.title} in ${articleDir}`);
     }
 
