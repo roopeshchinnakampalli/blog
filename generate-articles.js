@@ -35,10 +35,17 @@ function generateArticle(articleDir) {
     const metadataPath = path.join(articleDir, 'metadata.json');
     const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
     
-    // Validate metadata
-    if (!metadata.content) {
+    // Read content from content.html if it exists, otherwise fall back to metadata.content
+    const contentPath = path.join(articleDir, 'content.html');
+    let articleContent = '';
+
+    if (fs.existsSync(contentPath)) {
+        articleContent = fs.readFileSync(contentPath, 'utf8');
+    } else if (metadata.content) {
+        articleContent = metadata.content;
+    } else {
         console.error(`Metadata keys found: ${Object.keys(metadata).join(', ')}`);
-        throw new Error(`Content missing for article: ${metadata.title} in ${articleDir}`);
+        throw new Error(`Content missing for article: ${metadata.title} in ${articleDir}. Checked content.html and metadata.content.`);
     }
 
     // Generate body content (the article itself)
@@ -52,7 +59,7 @@ function generateArticle(articleDir) {
                 ${tagsHTML}
             </div>
             <div class="content">
-                ${metadata.content}
+                ${articleContent}
             </div>
         </article>
     `;
