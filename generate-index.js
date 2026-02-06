@@ -46,6 +46,7 @@ function generateArticleListItem(metadata) {
                     <p class="date">${metadata.date}</p>
                     <p class="reading-time">${metadata.readingTime}</p>
                 </div>
+                <p>${metadata.shortDescription || metadata.description}</p>
             </article>`;
 }
 
