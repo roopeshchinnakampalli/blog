@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
-const marked = require('marked');
 const minify = require('html-minifier').minify;
+const { marked } = require('marked');
 
 // Minification options
 const minificationOptions = {
@@ -36,9 +36,21 @@ function generateArticle(articleDir) {
     const metadataPath = path.join(articleDir, 'metadata.json');
     const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
     
-    // Validate metadata
-    if (!metadata.content) {
-        throw new Error(`Content missing for article: ${metadata.title} in ${articleDir}`);
+    // Read content from content.html or content.md if it exists, otherwise fall back to metadata.content
+    const contentHtmlPath = path.join(articleDir, 'content.html');
+    const contentMdPath = path.join(articleDir, 'content.md');
+    let articleContent = '';
+
+    if (fs.existsSync(contentHtmlPath)) {
+        articleContent = fs.readFileSync(contentHtmlPath, 'utf8');
+    } else if (fs.existsSync(contentMdPath)) {
+        const markdownContent = fs.readFileSync(contentMdPath, 'utf8');
+        articleContent = marked.parse(markdownContent);
+    } else if (metadata.content) {
+        articleContent = metadata.content;
+    } else {
+        console.error(`Metadata keys found: ${Object.keys(metadata).join(', ')}`);
+        throw new Error(`Content missing for article: ${metadata.title} in ${articleDir}. Checked content.html, content.md and metadata.content.`);
     }
 
     // Generate body content (the article itself)
@@ -52,7 +64,7 @@ function generateArticle(articleDir) {
                 ${tagsHTML}
             </div>
             <div class="content">
-                ${metadata.content}
+                ${articleContent}
             </div>
         </article>
     `;
