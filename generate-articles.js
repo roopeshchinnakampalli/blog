@@ -35,6 +35,11 @@ function generateArticle(articleDir) {
     const metadataPath = path.join(articleDir, 'metadata.json');
     const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
     
+    // Validate metadata
+    if (!metadata.content) {
+        throw new Error(`Content missing for article: ${metadata.title} in ${articleDir}`);
+    }
+
     // Generate body content (the article itself)
     const tagsHTML = metadata.tags.map(tag => `<span class="tag">${tag}</span>`).join('\n');
 
