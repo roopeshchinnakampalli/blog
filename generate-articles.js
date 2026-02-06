@@ -69,6 +69,29 @@ function generateArticle(articleDir) {
         </article>
     `;
 
+    // Prepare JSON-LD
+    const jsonLdData = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": metadata.title,
+        "description": metadata.description,
+        "datePublished": metadata.publishedDate,
+        "dateModified": metadata.modifiedDate || metadata.publishedDate,
+        "author": {
+            "@type": "Person",
+            "name": "Roopesh Chinnakampalli"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://roopeshchinnakampalli.com/articles/${metadata.slug}/`
+        },
+        "url": `https://roopeshchinnakampalli.com/articles/${metadata.slug}/`
+    };
+
+    const jsonLd = `<script type="application/ld+json">
+${JSON.stringify(jsonLdData, null, 4)}
+</script>`;
+
     // Prepare context for layout
     const context = {
         pageTitle: `${metadata.title} - Roopesh Chinnakampalli`,
@@ -78,6 +101,7 @@ function generateArticle(articleDir) {
         url: `https://roopeshchinnakampalli.com/articles/${metadata.slug}/`,
         relativePath: '../../', // Since articles are in articles/slug/index.html
         body: bodyContent,
+        jsonLd: jsonLd,
         // Additional meta tags specific to articles can be injected via headContent helper if needed,
         // but for now we'll construct them here
         headContent: `
