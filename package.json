@@ -7,7 +7,7 @@
         "generate-index": "node generate-index.js",
         "generate-all": "node generate-articles.js && node generate-index.js",
         "serve": "lite-server",
-        "build": "node build.js",
+        "build": "npm run generate-all && node build.js",
         "clean": "rm -rf dist"
     },
     "keywords": [
