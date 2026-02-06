@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
+const marked = require('marked');
 const minify = require('html-minifier').minify;
 const { marked } = require('marked');
 

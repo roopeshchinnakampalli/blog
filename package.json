@@ -5,7 +5,9 @@
     "scripts": {
         "generate-articles": "node generate-articles.js",
         "generate-index": "node generate-index.js",
-        "generate-all": "node generate-articles.js && node generate-index.js",
+        "generate-tags": "node generate-tag-pages.js",
+        "generate-rss": "node generate-rss.js",
+        "generate-all": "npm run generate-articles && npm run generate-index && npm run generate-tags && npm run generate-rss",
         "serve": "lite-server",
         "build": "npm run generate-all && node build.js",
         "clean": "rm -rf dist"
@@ -21,9 +23,9 @@
     "license": "MIT",
     "dependencies": {
         "clean-css": "^5.3.2",
-        "fs-extra": "^11.2.0",
+        "fs-extra": "^11.3.0",
         "handlebars": "^4.7.8",
-        "marked": "^17.0.1",
+        "marked": "^15.0.12",
         "terser": "^5.28.1"
     },
     "devDependencies": {

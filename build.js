@@ -25,8 +25,12 @@ async function minifyCSS(inputPath, outputPath) {
 }
 
 async function build() {
-    // Create dist directory
-    await fs.emptyDir('dist');
+    // Ensure dist directory exists
+    const distDir = path.resolve(__dirname, 'dist');
+    await fs.ensureDir(distDir);
+    console.log(`Ensured 'dist' directory exists at: ${distDir}`);
+    await fs.emptyDir(distDir); // Still empty it to ensure clean build
+    console.log(`Emptied 'dist' directory at: ${distDir}`);
     
     // Minify and copy JS
     await minifyJS('script.js', 'dist/script.js');
@@ -48,7 +52,26 @@ async function build() {
         }
     });
     
+    // Copy tag pages
+    if (await fs.exists('tags')) {
+        await fs.copy('tags', 'dist/tags');
+    }
+
+    // Copy RSS feed
+    if (await fs.exists('rss.xml')) {
+        await fs.copy('rss.xml', path.join(distDir, 'rss.xml'));
+    }
+
     console.log('Build completed successfully!');
+
+    // Verify crucial files
+    const indexHtmlExists = await fs.pathExists(path.join(distDir, 'index.html'));
+    console.log(`Verification: dist/index.html exists? ${indexHtmlExists}`);
+    const tagPageExists = await fs.pathExists(path.join(distDir, 'tags', 'introduction.html'));
+    console.log(`Verification: dist/tags/introduction.html exists? ${tagPageExists}`);
+    const rssXmlExists = await fs.pathExists(path.join(distDir, 'rss.xml'));
+    console.log(`Verification: dist/rss.xml exists? ${rssXmlExists}`);
+
 }
 
 build().catch(console.error); 
