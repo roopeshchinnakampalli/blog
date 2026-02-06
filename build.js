@@ -62,6 +62,16 @@ async function build() {
         await fs.copy('rss.xml', path.join(distDir, 'rss.xml'));
     }
 
+    // Copy sitemap
+    if (await fs.exists('sitemap.xml')) {
+        await fs.copy('sitemap.xml', path.join(distDir, 'sitemap.xml'));
+    }
+
+    // Copy robots.txt
+    if (await fs.exists('robots.txt')) {
+        await fs.copy('robots.txt', path.join(distDir, 'robots.txt'));
+    }
+
     console.log('Build completed successfully!');
 
     // Verify crucial files
@@ -71,6 +81,10 @@ async function build() {
     console.log(`Verification: dist/tags/introduction.html exists? ${tagPageExists}`);
     const rssXmlExists = await fs.pathExists(path.join(distDir, 'rss.xml'));
     console.log(`Verification: dist/rss.xml exists? ${rssXmlExists}`);
+    const sitemapXmlExists = await fs.pathExists(path.join(distDir, 'sitemap.xml'));
+    console.log(`Verification: dist/sitemap.xml exists? ${sitemapXmlExists}`);
+    const robotsTxtExists = await fs.pathExists(path.join(distDir, 'robots.txt'));
+    console.log(`Verification: dist/robots.txt exists? ${robotsTxtExists}`);
 
 }
 

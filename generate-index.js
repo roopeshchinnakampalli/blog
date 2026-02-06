@@ -95,6 +95,23 @@ function generateIndex() {
         </section>
     `;
 
+    // Prepare JSON-LD
+    const jsonLdData = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://roopeshchinnakampalli.com/",
+        "name": "Roopesh Chinnakampalli",
+        "author": {
+            "@type": "Person",
+            "name": "Roopesh Chinnakampalli"
+        },
+        "description": "Personal website of Roopesh Chinnakampalli"
+    };
+
+    const jsonLd = `<script type="application/ld+json">
+${JSON.stringify(jsonLdData, null, 4)}
+</script>`;
+
     // Prepare context for layout
     const context = {
         pageTitle: 'Roopesh Chinnakampalli',
@@ -103,7 +120,8 @@ function generateIndex() {
         isArticle: false,
         url: 'https://roopeshchinnakampalli.com',
         relativePath: '',
-        body: bodyContent
+        body: bodyContent,
+        jsonLd: jsonLd
     };
 
     // Generate full HTML
