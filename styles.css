@@ -156,12 +156,19 @@ main {
     line-height: 1.4;
 }
 
-.post-header .date {
+.post-header .meta {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
     font-size: 0.9rem;
     color: var(--text-muted);
     white-space: nowrap;
     font-feature-settings: "tnum";
     font-variant-numeric: tabular-nums;
+}
+
+.post-header .date {
+    /* Kept for backward compatibility if needed, but styling moved to .meta generally */
 }
 
 /* Hover effect for list items */

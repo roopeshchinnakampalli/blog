@@ -28,12 +28,14 @@
             <article class="blog-post">
                 <div class="post-header">
                     <h2><a href="../{{this.path}}">{{this.title}}</a></h2>
-                    <p class="date">{{this.date}}</p>
-                    <p class="reading-time">{{this.readingTime}}</p>
+                    <div class="meta">
+                        <span class="date">{{this.date}}</span>
+                        <span class="reading-time">{{this.readingTime}}</span>
+                    </div>
                 </div>
                 <div class="tags">
                     {{#each this.tags}}
-                    <a href="../tags/{{this}}.html" class="tag">{{this}}</a>
+                    <a href="../tags/{{this.slug}}.html" class="tag">{{this.name}}</a>
                     {{/each}}
                 </div>
                 <p class="description">{{this.shortDescription}}</p>

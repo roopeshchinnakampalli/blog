@@ -43,8 +43,10 @@ function generateArticleListItem(metadata) {
             <article class="blog-post">
                 <div class="post-header">
                     <h2><a href="articles/${metadata.slug}/index.html">${metadata.title}</a></h2>
-                    <p class="date">${metadata.date}</p>
-                    <p class="reading-time">${metadata.readingTime}</p>
+                    <div class="meta">
+                        <span class="date">${metadata.date}</span>
+                        <span class="reading-time">${metadata.readingTime}</span>
+                    </div>
                 </div>
                 <p>${metadata.shortDescription || metadata.description}</p>
             </article>`;
