@@ -30,7 +30,11 @@ async function generateTagPages() {
 
                     // Calculate reading time
                     let readingTimeText = "";
-                    const markdownPath = path.join(articlePath, 'article.md');
+                    let markdownPath = path.join(articlePath, 'article.md');
+                    if (!await fs.pathExists(markdownPath)) {
+                        markdownPath = path.join(articlePath, 'content.md');
+                    }
+
                     if (await fs.pathExists(markdownPath)) {
                         const markdownContent = await fs.readFile(markdownPath, 'utf8');
                         const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, '');
