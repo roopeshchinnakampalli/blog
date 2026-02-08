@@ -7,13 +7,54 @@
         <priority>1.0</priority>
     </url>
     <url>
+        <loc>https://roopeshchinnakampalli.com/articles/building-roadrash-browser-ai/</loc>
+        <lastmod>2026-02-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://roopeshchinnakampalli.com/articles/hello-world/</loc>
         <lastmod>2025-04-19</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://roopeshchinnakampalli.com/tags/ai.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://roopeshchinnakampalli.com/tags/claude.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://roopeshchinnakampalli.com/tags/gamedev.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://roopeshchinnakampalli.com/tags/gemini.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
         <loc>https://roopeshchinnakampalli.com/tags/introduction.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://roopeshchinnakampalli.com/tags/jules.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://roopeshchinnakampalli.com/tags/sideprojects.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://roopeshchinnakampalli.com/tags/vibecoding.html</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>

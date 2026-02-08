@@ -66,7 +66,11 @@ function generateIndex() {
         const metadata = readMetadata(articleDirPath);
         if (metadata) {
             // Calculate reading time
-            const markdownPath = path.join(articleDirPath, 'article.md');
+            let markdownPath = path.join(articleDirPath, 'article.md');
+            if (!fs.existsSync(markdownPath)) {
+                markdownPath = path.join(articleDirPath, 'content.md');
+            }
+
             if (fs.existsSync(markdownPath)) {
                 const markdownContent = fs.readFileSync(markdownPath, 'utf8');
                 const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, ''); // Strip HTML/MD tags and front matter
