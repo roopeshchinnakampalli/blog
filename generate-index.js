@@ -43,8 +43,10 @@ function generateArticleListItem(metadata) {
             <article class="blog-post">
                 <div class="post-header">
                     <h2><a href="articles/${metadata.slug}/index.html">${metadata.title}</a></h2>
-                    <p class="date">${metadata.date}</p>
-                    <p class="reading-time">${metadata.readingTime}</p>
+                    <div class="meta">
+                        <span class="date">${metadata.date}</span>
+                        <span class="reading-time">${metadata.readingTime}</span>
+                    </div>
                 </div>
                 <p>${metadata.shortDescription || metadata.description}</p>
             </article>`;
@@ -66,7 +68,11 @@ function generateIndex() {
         const metadata = readMetadata(articleDirPath);
         if (metadata) {
             // Calculate reading time
-            const markdownPath = path.join(articleDirPath, 'article.md');
+            let markdownPath = path.join(articleDirPath, 'article.md');
+            if (!fs.existsSync(markdownPath)) {
+                markdownPath = path.join(articleDirPath, 'content.md');
+            }
+
             if (fs.existsSync(markdownPath)) {
                 const markdownContent = fs.readFileSync(markdownPath, 'utf8');
                 const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, ''); // Strip HTML/MD tags and front matter

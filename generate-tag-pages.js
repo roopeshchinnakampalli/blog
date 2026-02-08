@@ -30,7 +30,11 @@ async function generateTagPages() {
 
                     // Calculate reading time
                     let readingTimeText = "";
-                    const markdownPath = path.join(articlePath, 'article.md');
+                    let markdownPath = path.join(articlePath, 'article.md');
+                    if (!await fs.pathExists(markdownPath)) {
+                        markdownPath = path.join(articlePath, 'content.md');
+                    }
+
                     if (await fs.pathExists(markdownPath)) {
                         const markdownContent = await fs.readFile(markdownPath, 'utf8');
                         const textContent = markdownContent.replace(/<\/?[^>]+(>|$)/g, "").replace(/---(.*?)---/s, '');
@@ -49,7 +53,10 @@ async function generateTagPages() {
                             path: path.join('articles', folder, 'index.html').replace(/\\/g, '/'),
                             slug: metadata.slug,
                             readingTime: readingTimeText,
-                            tags: metadata.tags // Pass along the article's own tags
+                            tags: metadata.tags.map(t => ({
+                                name: t,
+                                slug: t.toLowerCase().replace(/\s+/g, '-')
+                            }))
                         };
 
                         metadata.tags.forEach(tag => {
