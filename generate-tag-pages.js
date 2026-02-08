@@ -53,7 +53,10 @@ async function generateTagPages() {
                             path: path.join('articles', folder, 'index.html').replace(/\\/g, '/'),
                             slug: metadata.slug,
                             readingTime: readingTimeText,
-                            tags: metadata.tags // Pass along the article's own tags
+                            tags: metadata.tags.map(t => ({
+                                name: t,
+                                slug: t.toLowerCase().replace(/\s+/g, '-')
+                            }))
                         };
 
                         metadata.tags.forEach(tag => {
