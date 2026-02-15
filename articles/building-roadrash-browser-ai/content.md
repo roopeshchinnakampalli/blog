@@ -1,118 +1,98 @@
-## The Long-Pending Dream 🚴‍♂️💥
+## Introduction
 
-For years, I’ve had this one stubborn wish: to rebuild the classic RoadRash game — the one many of us grew up playing — and make it run directly inside a web browser.
+For a long time, I’ve had a persistent idea in the back of my mind: rebuilding a classic RoadRash-style game that runs directly inside a web browser.
 
-No downloads. No emulators. Just pure nostalgia, playable anywhere.
+No installations.
+No emulators.
+Just a playable experience accessible from anywhere.
 
-With AI models getting really good at writing code, I finally thought:
+With modern AI models becoming increasingly capable at generating code, I decided to treat this as an experiment: could AI act as a meaningful development partner for building such a game?
 
-> *What if I let AI do most of the heavy lifting, and I just guide, tweak, review, and ship?*
+Rather than keeping this as a private project, I chose to build it publicly.
 
-That idea turned into a real experiment.
+---
 
-## The Setup: Building in Public
+## The Setup
 
-To keep myself accountable, I went fully public:
+To formalize the experiment, I created a dedicated space:
 
-- Bought a domain: [https://builtwithai.fyi](https://builtwithai.fyi)
-- Created a project subdomain: [https://roadrash.builtwithai.fyi](https://roadrash.builtwithai.fyi)
+- Domain: https://builtwithai.fyi
+- Project URL: https://roadrash.builtwithai.fyi
 
-The goal was simple: **AI-assisted game development, end-to-end, visible to everyone.**
+The objective was straightforward: rely heavily on AI-assisted development, intervene minimally, and observe where things succeed or break.
 
-No private repos. No hiding the failures.
+Since I already had a Google AI Pro subscription, I decided to begin entirely within Google’s AI tooling ecosystem.
 
-## Going All-In on Google’s AI Stack 🤖
+---
 
-Since I already have a Google AI Pro subscription, I decided to test Google’s ecosystem seriously:
+## Phase 1: Prompt Engineering with Gemini
 
-- Gemini
-- Jules
-- Gemini Code Assist (VS Code)
+Instead of immediately asking an agent to build the game, I first asked Gemini a meta-level question:
 
-### Step 1: Let Gemini Write the Prompt
+“Generate a prompt that can be used with Jules to build a RoadRash-style browser game.”
 
-Instead of directly building the game, I asked Gemini a meta-question:
+Gemini produced a detailed prompt, which I then supplied directly to Jules to initiate the build process.
 
-> “Give me a prompt that I can use with Jules to build a RoadRash-style game.”
+---
 
-This is the prompt Gemini generated:
-👉 [https://gemini.google.com/app/bd4631348b8e3226](https://gemini.google.com/app/bd4631348b8e3226)
+## Phase 2: Jules Execution
 
-So far, so good.
+Jules ran for several hours without interruption and ultimately produced a working output.
 
-## Step 2: Jules Takes the Wheel (for 6.5 Hours ⏱️)
+The result was technically functional: a playable motorcycle game running in the browser. However, the experience was extremely minimal and lacked the defining characteristics of the classic RoadRash games.
 
-I fed Gemini’s prompt into Jules and started the session. What happened next surprised me:
+While this demonstrated that long-form autonomous code generation is possible, the outcome felt more like a prototype than a recognizable game.
 
-- Jules ran for ~6.5 hours
-- No intervention needed
-- Full code generation
+---
 
-Final output:
-👉 [https://roadrash.builtwithai.fyi](https://roadrash.builtwithai.fyi)
+## Phase 3: Iteration Challenges
 
-### The Result?
+The natural next step was refinement. I attempted to provide additional prompts to Jules to improve visuals, mechanics, and overall feel.
 
-- ✅ A playable game
-- ⚠️ Very bare-bones mechanics
-- ⚠️ Minimal polish
-- ⚠️ Feels more like a prototype than a game
+At this point, the workflow became unstable. Jules repeatedly failed to pause or resume sessions, effectively blocking further progress through that channel.
 
-Honestly? It was *okay-ish*. Not impressive — but not useless either. I could see potential **if prompts were refined further**.
+This highlighted a practical limitation of agent-based development: session reliability becomes a critical dependency.
 
-## Step 3: Prompt Tweaks… and a Dead End ❌
+---
 
-Naturally, I tried to iterate. I sent follow-up prompts to Jules to improve gameplay, add polish, and refine controls. That’s when things broke.
+## Phase 4: Gemini Code Assist
 
-Jules started throwing this error repeatedly:
+To continue iteration, I moved the generated code into VS Code and used Gemini Code Assist to request structural and gameplay improvements.
 
-> **“Failed to pause / resume. Please try again later.”**
+The result was unexpected but instructive. The game stopped rendering correctly, ultimately producing a blank screen. Debugging revealed that seemingly reasonable AI-generated modifications can easily destabilize an otherwise working system.
 
-No recovery. No progress. Session stuck. That experiment was effectively over.
+This was a reminder that AI-assisted refactoring remains fragile, particularly for interactive graphical applications.
 
-## Step 4: Gemini Code Assist Joins the Party 🧑‍💻
+---
 
-Plan B. I opened the generated code in VS Code and turned to Gemini Code Assist. I asked it to improve structure, enhance gameplay logic, and clean up rendering issues.
+## Key Observations
 
-The outcome?
+Several patterns became clear throughout this experiment:
 
-- 🟥 Blank screen
-- 🟥 Game no longer loads
-- 🟥 Something fundamental got messed up
+1. AI can bootstrap complex projects quickly, especially from a blank slate.
+2. Visual and experiential fidelity is far harder than generating functional code.
+3. Agent workflows are highly sensitive to prompt specificity.
+4. Iteration and refinement are currently the weakest parts of the process.
+5. Human oversight remains essential, particularly for preserving architectural intent.
 
-Classic AI-assisted refactor moment: *“Trust me bro”* — and then everything disappears.
+Most importantly, building something that “works” is very different from building something that “feels right.”
 
-## So… Can AI Build a Game Like RoadRash Today?
+---
 
-The honest answer: **almost, but not yet.**
+## Next Steps
 
-**What worked:**
-- AI can generate a full project from scratch
-- It can wire up rendering, controls, and basic logic
-- It’s great for bootstrapping ideas fast
+Given the mixed results within a single tooling ecosystem, the next logical step is comparative experimentation.
 
-**What didn’t:**
-- Long-running agent sessions are fragile
-- Iteration via prompts is unreliable
-- Refactoring non-trivial code often breaks things
-- You still need **human judgment at every step**
+Future iterations will explore alternative models and agents, particularly Claude, to evaluate differences in reasoning, rendering approaches, and code stability.
 
-## What’s Next?
+The goal is not merely to complete the game, but to better understand how AI tools behave in non-trivial creative and technical workflows.
 
-Ironically, this experiment might push me *away* from Google’s tools. Next up:
+---
 
-- 👉 Try Claude
-- 👉 Compare agentic coding quality
-- 👉 See which model respects my pixels better
+## Conclusion
 
-(Yes, Google — you kind of forced my hand here 😅)
+This project has been both frustrating and informative. AI models are clearly capable of generating substantial amounts of code, yet achieving authenticity, polish, and reliable iteration remains challenging.
 
-## Final Thoughts
+Despite the setbacks, the experiment has been worthwhile. Each failure reveals more about the current boundaries of AI-assisted development.
 
-This journey was messy, frustrating, and genuinely fascinating.
-
-AI is very close to being a real game dev partner — but we’re not at *“one prompt → polished RoadRash clone”* yet.
-
-Still, I’m glad I tried. More experiments coming. More failures coming. And hopefully… a better RoadRash too.
-
-If you’re building with AI, I’d love to hear what’s working (and breaking) for you.
+Progress continues.
