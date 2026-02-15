@@ -10,8 +10,6 @@ With modern AI models becoming increasingly capable at generating code, I decide
 
 Rather than keeping this as a private project, I chose to build it publicly.
 
----
-
 ## The Setup
 
 To formalize the experiment, I created a dedicated space:
@@ -23,8 +21,6 @@ The objective was straightforward: rely heavily on AI-assisted development, inte
 
 Since I already had a Google AI Pro subscription, I decided to begin entirely within Google’s AI tooling ecosystem.
 
----
-
 ## Phase 1: Prompt Engineering with Gemini
 
 Instead of immediately asking an agent to build the game, I first asked Gemini a meta-level question:
@@ -32,8 +28,6 @@ Instead of immediately asking an agent to build the game, I first asked Gemini a
 “Generate a prompt that can be used with Jules to build a RoadRash-style browser game.”
 
 Gemini produced a detailed prompt, which I then supplied directly to Jules to initiate the build process.
-
----
 
 ## Phase 2: Jules Execution
 
@@ -43,8 +37,6 @@ The result was technically functional: a playable motorcycle game running in the
 
 While this demonstrated that long-form autonomous code generation is possible, the outcome felt more like a prototype than a recognizable game.
 
----
-
 ## Phase 3: Iteration Challenges
 
 The natural next step was refinement. I attempted to provide additional prompts to Jules to improve visuals, mechanics, and overall feel.
@@ -53,8 +45,6 @@ At this point, the workflow became unstable. Jules repeatedly failed to pause or
 
 This highlighted a practical limitation of agent-based development: session reliability becomes a critical dependency.
 
----
-
 ## Phase 4: Gemini Code Assist
 
 To continue iteration, I moved the generated code into VS Code and used Gemini Code Assist to request structural and gameplay improvements.
@@ -62,8 +52,6 @@ To continue iteration, I moved the generated code into VS Code and used Gemini C
 The result was unexpected but instructive. The game stopped rendering correctly, ultimately producing a blank screen. Debugging revealed that seemingly reasonable AI-generated modifications can easily destabilize an otherwise working system.
 
 This was a reminder that AI-assisted refactoring remains fragile, particularly for interactive graphical applications.
-
----
 
 ## Key Observations
 
@@ -77,8 +65,6 @@ Several patterns became clear throughout this experiment:
 
 Most importantly, building something that “works” is very different from building something that “feels right.”
 
----
-
 ## Next Steps
 
 Given the mixed results within a single tooling ecosystem, the next logical step is comparative experimentation.
@@ -86,8 +72,6 @@ Given the mixed results within a single tooling ecosystem, the next logical step
 Future iterations will explore alternative models and agents, particularly Claude, to evaluate differences in reasoning, rendering approaches, and code stability.
 
 The goal is not merely to complete the game, but to better understand how AI tools behave in non-trivial creative and technical workflows.
-
----
 
 ## Conclusion
 
