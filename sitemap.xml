@@ -29,7 +29,7 @@
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://roopeshchinnakampalli.com/tags/gamedev.html</loc>
+        <loc>https://roopeshchinnakampalli.com/tags/game-development.html</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
@@ -49,12 +49,7 @@
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://roopeshchinnakampalli.com/tags/sideprojects.html</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://roopeshchinnakampalli.com/tags/vibecoding.html</loc>
+        <loc>https://roopeshchinnakampalli.com/tags/side-projects.html</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
